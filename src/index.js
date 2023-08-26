@@ -2,9 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 // import DemoOne from "./views/DemoOne";
 // import Dialog from "./views/components/Dialog";
-import Vote from "./views/Vote";
+// import Vote from "./views/Vote";
+import Demo from "./views/Demo2";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(
+  <>
+    <Demo />
+  </>
+);
 
 /**
  * render函数在渲染的时候，如果type是：
@@ -12,11 +19,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
  *  +普通函数：把函数执行，然后props传递给函数
  *  +构造函数：把构造函数基于new执行「也就是插件类的一个实例」，也会把解析出来的props传递进去
  * */
-root.render(
-  <>
-    <Vote title="react" />
-  </>
-);
+// root.render(
+//   <>
+//     <Vote title="react" />
+//   </>
+// );
 
 // root.render(
 //   <>
