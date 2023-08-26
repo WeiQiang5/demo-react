@@ -38,7 +38,43 @@ import PropTypes from "prop-types";
       +会抛出警告
       +可以使用UNSAFF_componentWillMount不抛出警告
       +如果开启了React.StrictMode「严格模式」,则我们使用UNSAFF_componentWillMount会抛出红色警告错误
- * */
+  4.触发render 周期函数：渲染
+  5.触发componentDidMount周期函数：第一次渲染完毕
+  + 已经把virtualDOM变成真实DOM了「所以我们可以获取真实DOM」
+
+  组件更新逻辑「第一种：组件内部的状态被修改，组件会更新」
+  1.触发shouldComponentUpdate 周期函数 是否允许更新
+    + 此周期函数需要返回一个布尔类型的值
+    + true允许更新 false不允许更新
+  2.触发componentWillUpdate 周期函数 更新之前
+    + 此周期函数，目前是不安全的，未来可能移除，
+    + 在这个阶段，状态/属性还没有被修改
+  3.修改状态值/属性值「让this.state.xxx改为最新的值」
+  4.触发render 周期函数，组件更新渲染
+    + 按照最新的状态/属性，把返回的js编译为virtualDOM
+    + 和第一次渲染出来的virtualDOM进行对比「DOM_DIFF」
+    + 把差异的部分进行渲染「渲染为真实DOM」
+  5.触发componentDidUpdate，组件更新完毕
+  特殊说明：如果我们是基于this.forceUpdate() 强制更新视图，会跳过触发shouldComponentUpdate校验，直接从
+  willUpdate开始进行更新「也就是，视图一定会更新」
+  
+  组件更新的逻辑「第二种，父组件更新，触发的子组件更新」
+  1.触发componentWillReceiveProps 周期函数 接收最新属性之前
+    + 不安全
+  2.触发shouldComponentUpdate 周期函数
+  ...同上
+
+  组件卸载掉逻辑
+  1.触发componentWillUnmount
+  2.组件销毁
+
+  父组件第一次渲染
+  父willMount=>父render=>「子willMount=>子render=>子didMount=>父didMount」
+  父组件更新
+  父shouldUpdate=>父willUpdate=>父render「子willReceiveProps=>子shouldUpdate=>子willUpdate=>子render=》子didUpdate=>父didUpdate」
+  父组件销毁
+  父willUnmount=>处理中「子willUnmount=>子销毁」=》父销毁
+  * */
 class Vote extends React.Component {
   // 属性的规则校验
   static defaultProps = {
@@ -59,6 +95,7 @@ class Vote extends React.Component {
     oppNum: 5,
   };
   render() {
+    console.log("渲染");
     console.log(this.props);
     let { supNum, oppNum } = this.state;
     return (
@@ -93,6 +130,30 @@ class Vote extends React.Component {
         </div>
       </div>
     );
+  }
+  UNSAFE_componentWillMount() {
+    console.log("componentWillMount:第一次渲染之前");
+  }
+  componentDidMount() {
+    console.log("componentDidMount:第一次渲染完毕");
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    // 特点nextState:最新状态
+    // this.state修改前的状态
+    console.log("shouldComponentUpdate", this.state, nextState);
+    return false;
+  }
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
+    console.log("componentWillUpdate", this.state, nextState);
+  }
+  componentDidUpdate() {
+    console.log("componentDidUpdate组件更新完毕");
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    console.log("UNSAFE_componentWillReceiveProps", this.props, nextProps);
+  }
+  componentWillUnmount() {
+    console.log("UNSAFE_componentWillUnmount:组件卸载之前");
   }
 }
 
