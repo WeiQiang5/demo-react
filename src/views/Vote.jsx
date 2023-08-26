@@ -74,6 +74,16 @@ import PropTypes from "prop-types";
   父shouldUpdate=>父willUpdate=>父render「子willReceiveProps=>子shouldUpdate=>子willUpdate=>子render=》子didUpdate=>父didUpdate」
   父组件销毁
   父willUnmount=>处理中「子willUnmount=>子销毁」=》父销毁
+
+  总结：
+  函数组件是静态组件
+  + 组件第一次渲染完毕后，无法基于内部的某些操作让组件更新「无法实现子更新」，但是如果调用它的父组件更新了，那么相关的子组件也一定
+    会更新「可能传递最新的属性值进来」
+  + 函数组件：具备属性
+  类组件是动态组件
+  + 组件在第一次渲染完毕后，除了父组件更新可以触发其更新，我们可以通过：this.setState修改状态或者this.forceUpdate等方式，让
+    组件实现子更新
+  + 类组件：属性，状态，周期函数，ref...「几乎组件应该有的东西它都具备」
   * */
 class Vote extends React.Component {
   // 属性的规则校验
