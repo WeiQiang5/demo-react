@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 // import DemoOne from "./views/DemoOne";
 // import Dialog from "./views/components/Dialog";
 // import Vote from "./views/Vote";
-import Demo from "./views/Demo4";
+import Demo from "./views/Demo5";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
