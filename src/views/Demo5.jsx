@@ -1,4 +1,6 @@
 import React from "react";
+// flushSync是可以刷新updater更新队列，也就是让修改状态的人物立即批处理一次
+import { flushSync } from "react-dom";
 
 /**
  * this.setState(partialState,callback)
@@ -45,19 +47,48 @@ class Demo extends React.Component {
     //   z: z + 1,
     // });
 
-    setTimeout(() => {
-      this.setState({ x: x + 1 });
-      console.log("x", this.state.x, this.state.y, this.state.z);
-    }, 1000);
-    setTimeout(() => {
-      this.setState({ y: y + 1 });
-      console.log("y", this.state.x, this.state.y, this.state.z);
-    }, 1000);
-    console.log(this.state.x, this.state.y);
-    setTimeout(() => {
-      this.setState({ z: z + 1 });
-      console.log("z", this.state.x, this.state.y, this.state.z);
-    }, 500);
+    // setTimeout(() => {
+    //   this.setState({ x: x + 1 });
+    //   console.log("x", this.state.x, this.state.y, this.state.z);
+    // }, 1000);
+    // setTimeout(() => {
+    //   this.setState({ y: y + 1 });
+    //   console.log("y", this.state.x, this.state.y, this.state.z);
+    // }, 1000);
+    // console.log(this.state.x, this.state.y);
+    // setTimeout(() => {
+    //   this.setState({ z: z + 1 });
+    //   console.log("z", this.state.x, this.state.y, this.state.z);
+    // }, 500);
+    // 用于同时操作状态，想要z在x和y之后立即执行
+    // this.setState({ x: x + 1 });
+    // console.log("flushSync之前", this.state); //10/5/0
+    // flushSync(() => {
+    //   this.setState({ y: y + 1 });
+    //   console.log("flushSync内", this.state); //10/5/0
+    // });
+    // console.log("flushSync之后", this.state); //10/5/0
+    // // 在修改z之前，要保证x/y都已经更改和让视图更新了
+    // this.setState({ z: this.state.x + this.state.y });
+
+    for (let i = 0; i < 20; i++) {
+      // 更新一次，最后结果20
+      this.setState((nextValue) => {
+        return {
+          x: nextValue.x + 1,
+        };
+      });
+      // 更新20次，最后结果20
+      // flushSync(() => {
+      //   this.setState({
+      //     x: this.state.x + 1,
+      //   });
+      // });
+      // 这里更新1次，答案1
+      // this.setState({
+      //   x: this.state.x + 1,
+      // });
+    }
   };
   render() {
     console.log("视图渲染:render");
