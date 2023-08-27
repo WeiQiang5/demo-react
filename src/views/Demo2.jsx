@@ -70,9 +70,9 @@ class Demo extends React.PureComponent {
              * 2.赋值新数组，改变地址
              * */
             // this.forceUpdate();//会跳过shouldComponentUpdate
-            this.setState({
-              arr: [...arr],
-            });
+            // this.setState({
+            //   arr: [...arr],
+            // });
           }}
         >
           新增SPAN
