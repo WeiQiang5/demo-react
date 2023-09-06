@@ -1,0 +1,33 @@
+import React, { useState, useCallback } from "react";
+import VoteFooter from "./VoteFooter";
+import VoteMain from "./VoteMain";
+import "../../scss/Demo.scss";
+
+const Vote = function Vote() {
+  let [supNum, setSupNum] = useState(10),
+    [oppNum, setOppNum] = useState(0);
+
+  const change = useCallback(
+    (type) => {
+      if (type === "sup") {
+        setSupNum(supNum + 1);
+        return;
+      }
+      setOppNum(oppNum + 1);
+    },
+    [oppNum, supNum]
+  );
+
+  return (
+    <div className="vote-box">
+      <div className="header">
+        <h2 className="title">react牛逼</h2>
+        <span className="num">{supNum + oppNum}</span>
+      </div>
+      <VoteMain supNum={supNum} oppNum={oppNum} />
+      <VoteFooter change={change} />
+    </div>
+  );
+};
+
+export default Vote;

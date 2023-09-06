@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 // import DemoOne from "./views/DemoOne";
 // import Dialog from "./views/components/Dialog";
 // import Vote from "./views/Vote";
-import Demo from "./views/hooksDemo9";
+import Demo from "./views/Vote/index";
 // 使用antd
 import { ConfigProvider } from "antd";
 import zhCn from "antd/locale/zh_CN";
