@@ -27,25 +27,25 @@ const Demo = () => {
   let [num, setNum] = useState(0),
     [x, setX] = useState(100);
 
-  // 1.
-  useEffect(() => {
-    // 获取最新的状态值
-    console.log("@1", num);
-  });
-  // 2
-  useEffect(() => {
-    // 获取最新的状态值
-    console.log("@2", num);
-  }, []);
+  // 1.相当于componentDidMount和componentDidUpdate的结合
+  // useEffect(() => {
+  //   // 获取最新的状态值
+  //   console.log("@1", num);
+  // });
+  // // 2
+  // useEffect(() => {
+  //   // 获取最新的状态值
+  //   console.log("@2", num);
+  // }, []);
   // 3
   useEffect(() => {
     // 获取最新的状态值
-    console.log("@3", num);
+    console.log("有依赖但没返回函数", num);
   }, [num]);
   // 4
   useEffect(() => {
     return () => {
-      console.log("@4", num);
+      console.log("有依赖返回函数", num);
     };
   }, [num]);
 
