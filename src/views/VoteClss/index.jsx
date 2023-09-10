@@ -18,14 +18,27 @@ class Vote extends React.Component {
   render() {
     let { supNum, oppNum } = this.state;
     return (
-      <div className="vote-box">
-        <div className="header">
-          <h2 className="title">react牛逼</h2>
-          <span className="num">{supNum + oppNum}</span>
+      /**
+       * 基于上下文对象中，提供的Provider组件
+       * +向上下文中存信息：value属性指定的值就是要存的信息
+       * +当祖先组件更新，render重新执行，会把最新的状态值，再次赋值到上下文对象中
+       * */
+      <ThemeContext.Provider
+        value={{
+          supNum,
+          oppNum,
+          change: this.change,
+        }}
+      >
+        <div className="vote-box">
+          <div className="header">
+            <h2 className="title">react牛逼</h2>
+            <span className="num">{supNum + oppNum}</span>
+          </div>
+          <VoteMain />
+          <VoteFooter />
         </div>
-        <VoteMain />
-        <VoteFooter />
-      </div>
+      </ThemeContext.Provider>
     );
   }
 }

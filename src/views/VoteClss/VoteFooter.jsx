@@ -1,18 +1,27 @@
 import React from "react";
-import PropTypes from "prop-types";
+import ThemeContext from "@/ThemeContext";
+/**
+ * 后代类组件获取上下文中的方法
+ * 方案二
+ * + 导入创建的上下文对象
+ * + 使用<ThemeContext.Consumer，里面调用函数，参数为上下文
+ * + 在参数context属性上，存了上下文中的所有信息
+ * */
 class VoteFooter extends React.PureComponent {
-  static defaultProps = {};
-  static propTypes = {
-    change: PropTypes.func.isRequired,
-  };
   render() {
     console.log("更新");
-    let { change } = this.props;
     return (
-      <div className="footer">
-        <button onClick={change.bind(null, "sup")}>支持</button>
-        <button onClick={change.bind(null, "opp")}>反对</button>
-      </div>
+      <ThemeContext.Consumer>
+        {(context) => {
+          let { change } = context;
+          return (
+            <div className="footer">
+              <button onClick={change.bind(null, "sup")}>支持</button>
+              <button onClick={change.bind(null, "opp")}>反对</button>
+            </div>
+          );
+        }}
+      </ThemeContext.Consumer>
     );
   }
 }
