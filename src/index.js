@@ -7,12 +7,19 @@ import Demo from "./views/Menu/Nav";
 // 使用antd
 import { ConfigProvider } from "antd";
 import zhCn from "antd/locale/zh_CN";
+import ThemeContext from "./ThemeContext";
+
+// 引入redux
+import store from "./store";
+console.log("store", store);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <ConfigProvider locale={zhCn}>
-    <Demo x={10} y={20} enable={true} />
+    <ThemeContext.Provider value={{ store }}>
+      <Demo x={10} y={20} enable={true} />
+    </ThemeContext.Provider>
   </ConfigProvider>
 );
 
